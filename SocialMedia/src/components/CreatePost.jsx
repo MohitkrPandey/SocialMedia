@@ -30,7 +30,7 @@ const CreatePost=()=>{
   }
 
   return <>
-  <form onSubmit={submitHandler}>
+  <form className="form" onSubmit={submitHandler}>
   <div className="mb-3">
     <label htmlFor="user" className="form-label">Enter Your User Id here</label>
     <input type="text" className="form-control" id="user" placeholder="Your User Id" ref={userIdInput}/>
@@ -45,7 +45,7 @@ const CreatePost=()=>{
 
 <div className="mb-3">
     <label htmlFor="content" className="form-label">Post Content</label>
-    <textarea className="form-control" id="content" placeholder="Tell us more about it" ref={bodyInput} />
+    <textarea  rows="6" className="form-control" id="content" placeholder="Tell us more about it" ref={bodyInput} />
 
   </div>
 

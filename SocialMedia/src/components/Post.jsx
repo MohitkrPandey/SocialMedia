@@ -18,7 +18,7 @@ const Post = ({ post }) => {
   }
   return (
     <>
-      <div className="card" style={{ width: "18rem" }}>
+      <div className="card " >
         <div className="card-body">
           <h5 className="card-title">
             {post.title}
@@ -39,7 +39,7 @@ const Post = ({ post }) => {
           ))}
   
           <div
-            className="alert alert-primary d-flex align-items-center gap-2"
+            className="alert alert-primary d-flex align-items-center gap-2 slide"
             role="alert"
           >
             <span>{post.reactions} people have  liked your post!</span>

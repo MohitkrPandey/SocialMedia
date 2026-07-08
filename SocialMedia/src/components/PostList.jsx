@@ -4,11 +4,11 @@ import { PostListData } from "../store/post-list-store";
 const PostList=()=>{
 
 const {postList}=useContext(PostListData);
-  return <>
+  return <div className="body">
     {postList.map((post)=><Post key={post.id} post={post}></Post>)}
       
       
-  </>
+  </div>
 }
 
 export default PostList;
