@@ -4,6 +4,7 @@ export const PostListData = createContext({
   postList: [],
   addPost: () => {},
   deletePost: () => {},
+  fetchPosts: ()=>{},
   incrementReaction:()=>{},
 });
 
@@ -12,7 +13,10 @@ const postListReducer = (currPostList, action) => {
   if (action.type === "ADD_POST") {
     newPostList = [action.payload, ...currPostList];
   }
-
+  
+  else if(action.type=="FETCH_POSTS"){
+    newPostList=action.payload;
+  }
   else if (action.type == "DELETE_POST") {
    
       newPostList = currPostList.filter((it)=>it.id!==action.payload.itemId);
@@ -29,7 +33,7 @@ const postListReducer = (currPostList, action) => {
 const PostListProvider = ({ children }) => {
   const [postList, dispatchPostList] = useReducer(
     postListReducer,
-    DEFAULT_POST_LIST,
+    [],
   );
 
   const addPost = (userId, title, body,reactions, tags) => {
@@ -45,6 +49,13 @@ const PostListProvider = ({ children }) => {
       },
     });
   };
+
+  const fetchPosts =(data)=>{
+     dispatchPostList({
+      type:"FETCH_POSTS",
+      payload:data,
+     })
+  }
 
   const deletePost = (itemId) => {
     dispatchPostList({
@@ -66,7 +77,7 @@ const PostListProvider = ({ children }) => {
   }
 
   return (
-    <PostListData.Provider value={{ postList, addPost, deletePost ,incrementReaction}}>
+    <PostListData.Provider value={{ postList, addPost,fetchPosts, deletePost ,incrementReaction}}>
       {children}
     </PostListData.Provider>
   );
