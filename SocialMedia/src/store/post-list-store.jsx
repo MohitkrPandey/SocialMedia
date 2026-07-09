@@ -11,11 +11,13 @@ export const PostListData = createContext({
 const postListReducer = (currPostList, action) => {
   let newPostList = currPostList;
   if (action.type === "ADD_POST") {
+   
     newPostList = [action.payload, ...currPostList];
   }
   
   else if(action.type=="FETCH_POSTS"){
-    newPostList=action.payload;
+    if(newPostList.length===0){
+    newPostList=action.payload;}
   }
   else if (action.type == "DELETE_POST") {
    
