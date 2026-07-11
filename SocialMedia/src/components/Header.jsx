@@ -9,8 +9,8 @@ const Header = () => {
             {" "}
             <a
               href="/"
-              className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-            >
+              className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none " 
+            > 
               {" "}
               <svg
                 className="bi me-2"

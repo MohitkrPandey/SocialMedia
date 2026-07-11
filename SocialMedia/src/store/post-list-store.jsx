@@ -1,4 +1,4 @@
-import { createContext, useReducer,useCallback } from "react";
+import { createContext, useReducer,useCallback,useState,useEffect } from "react";
 
 export const PostListData = createContext({
   postList: [],
@@ -6,6 +6,7 @@ export const PostListData = createContext({
   deletePost: () => {},
   fetchPosts: ()=>{},
   incrementReaction:()=>{},
+  fetching:false,
 });
 
 const postListReducer = (currPostList, action) => {
@@ -33,22 +34,37 @@ const postListReducer = (currPostList, action) => {
 };
 
 const PostListProvider = ({ children }) => {
+
+const [fetching ,setFetching]= useState(false);
+  
+const controller =new AbortController();
+  const signal =controller.signal;
+   useEffect(()=>{
+        setFetching(true);
+        fetch("https://6a4f6ef5f45d5352b6116675.mockapi.io/posts" ,{signal})
+          .then((res) => res.json())
+          .then((data) => {
+          
+          fetchPosts(data);
+        setFetching(false);
+
+        return ()=>{
+            controller.abort();
+        }
+  });
+        } ,[])
+
+
+
   const [postList, dispatchPostList] = useReducer(
     postListReducer,
     [],
   );
 
-  const addPost = (userId, title, body,reactions, tags) => {
+  const addPost = (post) => {
     dispatchPostList({
       type: "ADD_POST",
-      payload: {
-        id: Date.now(),
-        title,
-        body,
-        reactions,
-        tags,
-        userId,
-      },
+      payload: post,
     });
   };
 
@@ -79,7 +95,7 @@ const PostListProvider = ({ children }) => {
   }
 
   return (
-    <PostListData.Provider value={{ postList, addPost,fetchPosts, deletePost ,incrementReaction}}>
+    <PostListData.Provider value={{ postList, addPost,fetchPosts, deletePost ,incrementReaction,fetching}}>
       {children}
     </PostListData.Provider>
   );
